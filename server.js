@@ -13,10 +13,21 @@ app.use(express.static('public'));
 
 const user = require("./models/user");
 
+
 app.use(express.urlencoded({extended:true}));
+
 app.get("/" , (req,res) => {
-    res.render("log.ejs");
-})
+    res.render("pageShop.ejs");
+});
+
+app.get('/sig', (req, res) => {
+    res.render("log.ejs"); 
+});
+app.get('/pkg', (req, res) => {
+    res.render("pkg.ejs"); 
+});
+
+
 app.post("/log" , async (req,res) => {
     const userLog = new user() ;
     userLog.username = req.body.usernsme;
