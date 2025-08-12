@@ -13,6 +13,7 @@ app.use(express.static('public'));
 
 const user = require("./models/user");
 const admin = require("./models/admin");
+const produe = require("./models/produe");
 
 app.use(express.urlencoded({extended:true}));
 
@@ -107,13 +108,13 @@ app.post("/siginAdmin" , async (req,res) => {
     try{
        const result = await admin.find({email :email  , password:password}) ;
        if(result.length == 0 ){
-           res.render("sigFuls.ejs");
+           res.render("sigFulsAdmin.ejs");
        }else{
             const name = result.username;
-            res.render("pageShop.ejs" , {name : name});
+            res.render("manger.ejs" , {name : name});
        };
     }catch{
-        res.render("sigFuls.ejs");
+        res.render("sigFulsAdmin.ejs");
         console.log("ereer");
     };
 });
@@ -128,28 +129,32 @@ app.post("/loginAdmin" , async (req,res) => {
        
        if(resultUserName.length > 0){
             
-            res.render("logFuls.ejs" ,{Case:"usernsme"} );
+            res.render("logFulsAdmin.ejs" ,{Case:"usernsme"} );
             
             
        }else{
            if (resultUserEmail.length > 0) {
             
-            res.render("logFuls.ejs", {Case:"email"});
+            res.render("logFulsAdmin.ejs", {Case:"email"});
            } else {
 
             const name = adminLog.username;
             await adminLog.save();
-            res.render("pageShop.ejs" , {name : name});
+            res.render("manger.ejs" , {name : name});
 
            };  
        
 
        };
     }catch{
-        res.render("logFuls.ejs");
+        res.render("logFulsAdmin.ejs");
         console.log("ereer");
     };
     
+});
+
+app.get("/logOutManger", (req,res) => {
+    res.render("sigAdmin.ejs");
 });
 
 app.listen("3000" , () => {
